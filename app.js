@@ -14363,7 +14363,7 @@ function addMessage(message) {
 
 $('#fireAndForgetBtn').on('click', function (e) {
     let input = $('#fireAndForgetArea');
-    requestResponse(input.val(), addMessage);
+
     // $('#fireAndForgetResponses').append("<li>" + input.val() + "</li>");
     input.val('');
 });
@@ -14374,10 +14374,10 @@ $('#fireAndForgetClearMessagesBtn').on('click', function (e) {
 
 $('#requestResponseBtn').on('click', function (e) {
     let input = $('#requestResponseArea');
-
+    requestResponse(input.val(), addMessage);
     //todo call rsocket and get id
-    let id = 5;
-    $('#requestResponseResponses').append("<div id='div- " + id + "'>" + input.val() + " <input type='text' id='response'" + id + "/><button id=" + id + ">Response</button>");
+    // let id = 5;
+    // $('#requestResponseResponses').append("<div id='div- " + id + "'>" + input.val() + " <input type='text' id='response'" + id + "/><button id=" + id + ">Response</button>");
     input.val('');
 });
 $('#requestResponseClearMessagesBtn').on('click', function (e) {
@@ -14415,12 +14415,10 @@ function runHello(isServer, logFunction) {
             destination: destinationName,
             accessKey: 9007199254740991,
             accessToken: 'kTBDVtfRBO4tHOnZzSyY5ym2kfY='
-            // accessToken: 'phrtuBN+oyBRjNmusjvlGg==',
         },
         transport: {
             // url: "ws://localhost:8101/",
             url: "wss://rsocket-demo.herokuapp.com/ws"
-            // url: "ws://rsocket-innovate.herokuapp.com:8081",
         }
     });
 
@@ -14457,6 +14455,7 @@ async function requestResponse(input, logFunction) {
     // Call the HelloService
     sayHello.subscribe({
         onComplete: response => {
+            console.log("got a response ! " + response);
             $('#requestResponseResponses').append("<div>" + input + " : " + response + "</div>");
         },
         onError: error => {
@@ -14490,18 +14489,18 @@ function DefaultHelloService(serviceName, logFunction) {
         };
     
     */
-    this.sayHello = async function (message) {
-        const timeout = async ms => new Promise(res => setTimeout(res, ms));
+    this.sayHello = function (message) {
+        console.log('Got a message' + message.getName());
         let next = false;
-        let resp = "no message";
-        async function waitUserInput(e) {
-            while (next === false) await timeout(50); // pause script but avoid browser to freeze ;)
+        let resp = null;
+        function waitUserInput(e) {
+            while (next === false) setTimeout(() => {}, 50); // pause script but avoid browser to freeze ;)
             next = false; // reset var
             console.log('user input detected');
-            e.call(resp);
+            e.call();
         }
         let id = this.message++;
-        $('#requestResponseResponses').append("<div id='div" + id + "'>" + message + " <input type='text' id='response'" + id + "/><button id=btn" + id + ">Response</button>");
+        $('#requestResponseResponses').append("<div id='div" + id + "'>" + message.getName() + " <input type='text' id='response " + id + "'/><button id='btn" + id + "'>Response</button>");
         $('#btn' + id).on('click', function (e) {
             let input = $('#requestResponseArea');
             //todo call rsocket and get id
@@ -14512,7 +14511,7 @@ function DefaultHelloService(serviceName, logFunction) {
         });
         return new Single(subscriber => {
             subscriber.onSubscribe();
-            waitUserInput(value => subscriber.onComplete(value));
+            waitUserInput(() => subscriber.onComplete(resp));
         });
     };
 }

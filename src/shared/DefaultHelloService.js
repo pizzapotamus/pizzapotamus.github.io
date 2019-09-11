@@ -17,18 +17,18 @@ function DefaultHelloService(serviceName, logFunction) {
     };
 
 */
-    this.sayHello = async function (message) {
-        const timeout = async ms => new Promise(res => setTimeout(res, ms));
+    this.sayHello = function (message) {
+        console.log('Got a message' + message.getName());
         let next = false;
-        let resp = "no message";
-        async function waitUserInput(e){
-            while (next === false) await timeout(50); // pause script but avoid browser to freeze ;)
+        let resp = null;
+        function waitUserInput(e){
+            while (next === false) setTimeout(() => {}, 50); // pause script but avoid browser to freeze ;)
             next = false; // reset var
             console.log('user input detected');
-            e.call(resp);
+            e.call();
         }
         let id = this.message++;
-        $('#requestResponseResponses').append("<div id='div" + id + "'>" + message + " <input type='text' id='response'" + id + "/><button id=btn" + id + ">Response</button>");
+        $('#requestResponseResponses').append("<div id='div" + id + "'>" + message.getName() + " <input type='text' id='response " + id +"'/><button id='btn" + id + "'>Response</button>");
         $('#btn' + id).on('click', function (e) {
             let input = $('#requestResponseArea');
             //todo call rsocket and get id
@@ -39,7 +39,7 @@ function DefaultHelloService(serviceName, logFunction) {
         });
         return new Single(subscriber => {
             subscriber.onSubscribe();
-            waitUserInput((value) => subscriber.onComplete(value));
+            waitUserInput(() => subscriber.onComplete(resp));
         });
     };
 }

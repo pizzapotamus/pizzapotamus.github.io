@@ -12,7 +12,7 @@ function addMessage(message) {
 
 $('#fireAndForgetBtn').on('click', function (e) {
     let input = $('#fireAndForgetArea');
-    requestResponse(input.val(), addMessage);
+
     // $('#fireAndForgetResponses').append("<li>" + input.val() + "</li>");
     input.val('');
 });
@@ -23,10 +23,10 @@ $('#fireAndForgetClearMessagesBtn').on('click', function (e) {
 
 $('#requestResponseBtn').on('click', function (e) {
     let input = $('#requestResponseArea');
-
+    requestResponse(input.val(), addMessage);
     //todo call rsocket and get id
-    let id = 5;
-    $('#requestResponseResponses').append("<div id='div- " + id + "'>" + input.val() + " <input type='text' id='response'" + id + "/><button id=" + id + ">Response</button>");
+    // let id = 5;
+    // $('#requestResponseResponses').append("<div id='div- " + id + "'>" + input.val() + " <input type='text' id='response'" + id + "/><button id=" + id + ">Response</button>");
     input.val('');
 });
 $('#requestResponseClearMessagesBtn').on('click', function (e) {

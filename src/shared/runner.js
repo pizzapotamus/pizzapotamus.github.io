@@ -21,11 +21,10 @@ function runHello(isServer, logFunction) {
             destination: destinationName,
             accessKey: 9007199254740991,
             accessToken: 'kTBDVtfRBO4tHOnZzSyY5ym2kfY=',
-            // accessToken: 'phrtuBN+oyBRjNmusjvlGg==',
         },
         transport: {
-            url: "ws://localhost:8101/",
-            // url: "wss://rsocket-demo.herokuapp.com/ws",
+            // url: "ws://localhost:8101/",
+            url: "wss://rsocket-demo.herokuapp.com/ws",
         },
     });
 
@@ -67,6 +66,7 @@ async function requestResponse(input, logFunction) {
     // Call the HelloService
     sayHello.subscribe({
         onComplete: response => {
+            console.log("got a response ! " + response);
             $('#requestResponseResponses').append("<div>" + input + " : " + response + "</div>");
         },
         onError: error => {
