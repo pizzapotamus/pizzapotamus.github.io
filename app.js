@@ -14349,7 +14349,7 @@ function never() {
 /* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { runHello } = __webpack_require__(116);
+const { runHello, requestResponse } = __webpack_require__(116);
 
 function addMessage(message) {
     var ul = document.getElementById('messages');
@@ -14362,12 +14362,31 @@ function addMessage(message) {
 }
 
 $('#fireAndForgetBtn').on('click', function (e) {
-    console.log("meo2w");
-    //your code here
+    let input = $('#fireAndForgetArea');
+    requestResponse(input.val(), addMessage);
+    // $('#fireAndForgetResponses').append("<li>" + input.val() + "</li>");
+    input.val('');
+});
+
+$('#fireAndForgetClearMessagesBtn').on('click', function (e) {
+    $('#fireAndForgetResponses').empty();
+});
+
+$('#requestResponseBtn').on('click', function (e) {
+    let input = $('#requestResponseArea');
+
+    //todo call rsocket and get id
+    let id = 5;
+    $('#requestResponseResponses').append("<div id='div- " + id + "'>" + input.val() + " <input type='text' id='response'" + id + "/><button id=" + id + ">Response</button>");
+    input.val('');
+});
+$('#requestResponseClearMessagesBtn').on('click', function (e) {
+    $('#requestResponseResponses').empty();
 });
 
 //Run the Hello Service, "as server" injected by config, false by default. Client subscriber injected
-runHello(false, addMessage);
+// runHello(__AS_SERVER__, addMessage);
+runHello(true, addMessage);
 
 /***/ }),
 /* 116 */
@@ -14380,6 +14399,8 @@ const { HelloServiceClient, HelloServiceServer } = __webpack_require__(126);
 const { Netifi } = __webpack_require__(173);
 const generateName = __webpack_require__(262);
 const QUICKSTART_SERVICE_NAME = "com.netifi.quickstart.service.HelloService";
+
+let connection;
 
 function runHello(isServer, logFunction) {
 
@@ -14397,39 +14418,52 @@ function runHello(isServer, logFunction) {
         },
         transport: {
             url: "ws://localhost:8101/"
+            // url: "ws://rsocket-innovate.herokuapp.com:8081",
         }
     });
 
-    if (isServer) {
-        const serviceName = "helloservice-" + destinationName;
-        netifiGateway.addService(QUICKSTART_SERVICE_NAME, new HelloServiceServer(new DefaultHelloService(serviceName, logFunction)));
-        netifiGateway._connect();
-    } else {
-        // Connect to Netifi Netifi Platform
-        const conn = netifiGateway.group("quickstart.servers");
-
-        // Create Client to Communicate with the HelloService (included example service)
-        const client = new HelloServiceClient(conn);
-
+    const serviceName = "helloservice-" + destinationName;
+    netifiGateway.addService(QUICKSTART_SERVICE_NAME, new HelloServiceServer(new DefaultHelloService(serviceName, logFunction)));
+    netifiGateway._connect();
+    // Connect to Netifi Netifi Platform
+    connection = netifiGateway.group("quickstart.servers");
+    /*  // Create Client to Communicate with the HelloService (included example service)
+      const client = new HelloServiceClient(conn);
         // Create Request to HelloService
-        const request = new HelloRequest();
-        request.setName("World");
-
+      const request = new HelloRequest();
+      request.setName($('#fireAndForgetArea').val());
         console.log("Sending 'World' to HelloService...");
-
         // Call the HelloService
-        client.sayHello(request).subscribe({
-            onComplete: response => {
-                logFunction("Hello Service responded with: " + response.getMessage());
-            },
-            onError: error => {
-                logFunction("Hello Service responded with error: " + error);
-            }
-        });
-    }
+      client.sayHello(request).subscribe({
+          onComplete: response => {
+              logFunction("Hello Service responded with: " + response.getMessage());
+          },
+          onError: error => {
+              logFunction("Hello Service responded with error: " + error);
+          }
+      });*/
 }
 
-module.exports = { runHello };
+async function requestResponse(input, logFunction) {
+    const client = new HelloServiceClient(connection);
+
+    // Create Request to HelloService
+    const request = new HelloRequest();
+    request.setName(input);
+
+    let sayHello = client.sayHello(request);
+    // Call the HelloService
+    sayHello.subscribe({
+        onComplete: response => {
+            $('#requestResponseResponses').append("<div>" + input + " : " + response + "</div>");
+        },
+        onError: error => {
+            logFunction("Error: " + error);
+        }
+    });
+}
+
+module.exports = { runHello, requestResponse };
 
 /***/ }),
 /* 117 */
@@ -14442,12 +14476,40 @@ const {
 
 function DefaultHelloService(serviceName, logFunction) {
     this.serviceName = serviceName;
+    this.message = 0;
 
-    this.sayHello = function (message) {
-        logFunction("Received Hello from " + message.getName());
-        logFunction("Responding...");
-        const resp = new HelloResponse();
-        resp.setMessage("Hello, " + message.getName() + "! from " + this.serviceName);
+    /*
+        this.sayHello = function(message){
+            logFunction("Received Hello from " + message.getName());
+            logFunction("Responding...");
+            const resp = new HelloResponse();
+            resp.setMessage("Hello, " + message.getName() + "! from " + this.serviceName);
+            return Single.of(resp);
+        };
+    
+    */
+    this.sayHello = async function (message) {
+        const timeout = async ms => new Promise(res => setTimeout(res, ms));
+        let next = false;
+        async function waitUserInput() {
+            while (next === false) await timeout(50); // pause script but avoid browser to freeze ;)
+            next = false; // reset var
+            console.log('user input detected');
+        }
+        let id = this.message++;
+        $('#requestResponseResponses').append("<div id='div" + id + "'>" + message + " <input type='text' id='response'" + id + "/><button id=btn" + id + ">Response</button>");
+        let resp = "no message";
+        $('#btn' + id).on('click', function (e) {
+            let input = $('#requestResponseArea');
+            //todo call rsocket and get id
+            input.val('');
+            resp = new HelloResponse();
+            resp.setMessage("Hello, " + message.getName() + "! from " + serviceName);
+            next = true;
+        });
+        console.log("test");
+        await waitUserInput();
+        console.log("test2");
         return Single.of(resp);
     };
 }
