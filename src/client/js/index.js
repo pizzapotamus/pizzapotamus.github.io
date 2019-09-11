@@ -11,7 +11,7 @@ function addMessage(message) {
 }
 
 $('#fireAndForgetBtn').on('click', function (e) {
-    console.log("meow");
+    console.log("meo2w");
     //your code here
 });
 
