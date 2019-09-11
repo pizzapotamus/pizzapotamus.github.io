@@ -1,4 +1,4 @@
-const {runHello} = require('../../shared/runner');
+const {runHello, requestResponse} = require('../../shared/runner');
 
 function addMessage(message) {
     var ul = document.getElementById('messages');
@@ -12,9 +12,11 @@ function addMessage(message) {
 
 $('#fireAndForgetBtn').on('click', function (e) {
     let input = $('#fireAndForgetArea');
-    $('#fireAndForgetResponses').append("<li>" + input.val() + "</li>");
+    requestResponse(input.val(), addMessage);
+    // $('#fireAndForgetResponses').append("<li>" + input.val() + "</li>");
     input.val('');
 });
+
 $('#fireAndForgetClearMessagesBtn').on('click', function (e) {
     $('#fireAndForgetResponses').empty();
 });
@@ -32,4 +34,5 @@ $('#requestResponseClearMessagesBtn').on('click', function (e) {
 });
 
 //Run the Hello Service, "as server" injected by config, false by default. Client subscriber injected
-runHello(__AS_SERVER__, addMessage);
+// runHello(__AS_SERVER__, addMessage);
+runHello(true, addMessage);
