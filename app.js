@@ -14361,6 +14361,11 @@ function addMessage(message) {
     ul.appendChild(li);
 }
 
+$('#fireAndForgetBtn').on('click', function (e) {
+    console.log("meow");
+    //your code here
+});
+
 //Run the Hello Service, "as server" injected by config, false by default. Client subscriber injected
 runHello(false, addMessage);
 
