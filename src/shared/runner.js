@@ -21,10 +21,11 @@ function runHello(isServer, logFunction) {
             destination: destinationName,
             accessKey: 9007199254740991,
             accessToken: 'kTBDVtfRBO4tHOnZzSyY5ym2kfY=',
+            // accessToken: 'phrtuBN+oyBRjNmusjvlGg==',
         },
         transport: {
             url: "ws://localhost:8101/",
-            // url: "ws://rsocket-innovate.herokuapp.com:8081",
+            // url: "wss://rsocket-demo.herokuapp.com/ws",
         },
     });
 

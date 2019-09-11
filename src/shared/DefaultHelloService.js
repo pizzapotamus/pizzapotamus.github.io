@@ -20,14 +20,15 @@ function DefaultHelloService(serviceName, logFunction) {
     this.sayHello = async function (message) {
         const timeout = async ms => new Promise(res => setTimeout(res, ms));
         let next = false;
-        async function waitUserInput() {
+        let resp = "no message";
+        async function waitUserInput(e){
             while (next === false) await timeout(50); // pause script but avoid browser to freeze ;)
             next = false; // reset var
             console.log('user input detected');
+            e.call(resp);
         }
         let id = this.message++;
         $('#requestResponseResponses').append("<div id='div" + id + "'>" + message + " <input type='text' id='response'" + id + "/><button id=btn" + id + ">Response</button>");
-        let resp = "no message";
         $('#btn' + id).on('click', function (e) {
             let input = $('#requestResponseArea');
             //todo call rsocket and get id
@@ -36,10 +37,10 @@ function DefaultHelloService(serviceName, logFunction) {
             resp.setMessage("Hello, " + message.getName() + "! from " + serviceName);
             next = true;
         });
-        console.log("test");
-        await waitUserInput();
-        console.log("test2");
-        return Single.of(resp);
+        return new Single(subscriber => {
+            subscriber.onSubscribe();
+            waitUserInput((value) => subscriber.onComplete(value));
+        });
     };
 }
 
