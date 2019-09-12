@@ -1,61 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>RSocket Innovate</title>
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <title>RSocket Innovate</title>
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
 </head>
 <body>
 <h2>Messages</h2>
 <ul id="messages"></ul>
 
+<br>
 
-<!-- Fire and Forget -->
-<div>
-    <div class="btn-group">
-        <label for="fireAndForgetArea">Yell at someone one sided</label><input type="text" id="fireAndForgetArea"
+<div class="container">
+  <!-- Fire and Forget -->
+  <div class="row">
+    <div class="col-8">
+      <div class="btn-group">
+        <label for="fireAndForgetArea">Yell at someone one sided</label><input type="text"
+                                                                               id="fireAndForgetArea"
                                                                                class="form-control rounded-0"/>
-    </div>
-
-    <div class="btn-group">
+      </div>
+      <div class="btn-group">
         <button id="fireAndForgetBtn" class="btn btn-primary" style="float: right;">
-            Fire And Forget
+          Fire And Forget
         </button>
         <button id="fireAndForgetClearMessagesBtn" class="btn btn-primary">
-            Clear Messages
+          Clear Messages
         </button>
+      </div>
     </div>
 
-    <div>
-        <ol id="fireAndForgetResponses">
-        </ol>
+    <div class="col-4">
+      <ol id="fireAndForgetResponses">
+      </ol>
     </div>
-</div>
+  </div>
 
+  <br>
 
-<!-- Request Response -->
-<div>
-    <div class="btn-group">
-        <label for="requestResponseArea">Ask a question</label><input type="text" id="requestResponseArea"
+  <!-- Request Response -->
+  <div class="row">
+    <div class="col-8">
+      <div class="btn-group">
+        <label for="requestResponseArea">Ask a question</label><input type="text"
+                                                                      id="requestResponseArea"
                                                                       class="form-control rounded-0"/>
-    </div>
+      </div>
 
-    <div class="btn-group">
+      <div class="btn-group">
         <button id="requestResponseBtn" class="btn btn-primary">
-            Request
+          Request
         </button>
         <button id="requestResponseClearMessagesBtn" class="btn btn-primary">
-            Clear Messages
+          Clear Messages
         </button>
+      </div>
     </div>
 
-    <div>
-        <ol id="requestResponseResponses">
-        </ol>
+    <div class="col-4">
+      <ol id="requestResponseResponses">
+      </ol>
     </div>
+  </div>
 </div>
 
 
