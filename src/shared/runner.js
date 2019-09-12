@@ -61,7 +61,7 @@ async function requestFireForget(input, logFunction) {
     request.setName(input);
     client.fireAndForget(request).subscribe({
         onComplete: response => {
-            $('#fireAndForgetResponses').append("<li> You yelled " + input + " to " + response + "</li>");
+            $('#fireAndForgetResponses').append("<li> You yelled " + input + " </li>");
         },
         onError: error => {
             logFunction("Error: " + error);
