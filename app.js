@@ -14463,6 +14463,9 @@ function DefaultHelloService(serviceName, logFunction) {
     this.serviceName = serviceName;
 
     this.sayHello = function (message) {
+        let timeout = function (ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        };
         console.log("Got a message");
         let next = false;
         let resp = new HelloResponse();
@@ -14473,16 +14476,16 @@ function DefaultHelloService(serviceName, logFunction) {
             console.log("set message");
             next = true;
         });
-        function waitUserInput(e) {
-            while (next === false) setTimeout(() => {}, 50); // pause script but avoid browser to freeze ;)
+        async function waitUserInput(e) {
+            while (next === false) await timeout(250);
             next = false; // reset var
             console.log('user input detected');
             e.call();
         }
         resp.setMessage("derp");
-        return new Single(subscriber => {
+        return new Single(async subscriber => {
             subscriber.onSubscribe();
-            waitUserInput(() => subscriber.onComplete(resp));
+            await waitUserInput(() => subscriber.onComplete(resp));
         });
     };
 }
