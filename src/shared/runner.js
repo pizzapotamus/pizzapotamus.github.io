@@ -46,7 +46,6 @@ async function requestResponse(input, logFunction) {
     // Call the HelloService
     client.sayHello(request).subscribe({
         onComplete: response => {
-            console.log("got a response ! " + response.getMessage());
             $('#requestResponseResponses').append("<div>" + input + " : " + response + "</div>");
         },
         onError: error => {
@@ -62,8 +61,7 @@ async function requestFireForget(input, logFunction) {
     request.setName(input);
     client.fireAndForget(request).subscribe({
         onComplete: response => {
-            console.log("got a response ! " + response.getMessage());
-            $('#fireAndForgetResponses').append("<li> You yelled " + input + " to " + response.getMessage() + "</li>");
+            $('#fireAndForgetResponses').append("<li> You yelled " + input + " to " + response + "</li>");
         },
         onError: error => {
             logFunction("Error: " + error);
