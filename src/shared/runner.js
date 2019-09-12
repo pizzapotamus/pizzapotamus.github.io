@@ -23,8 +23,8 @@ function runHello(isServer, logFunction) {
             accessToken: 'kTBDVtfRBO4tHOnZzSyY5ym2kfY=',
         },
         transport: {
-            // url: "ws://localhost:8101/",
-            url: "wss://rsocket-demo.herokuapp.com/ws",
+            url: "ws://localhost:8101/",
+            // url: "wss://rsocket-demo.herokuapp.com/ws",
         },
     });
 
@@ -33,40 +33,20 @@ function runHello(isServer, logFunction) {
     netifiGateway._connect();
     // Connect to Netifi Netifi Platform
     connection = netifiGateway.group("quickstart.servers");
-  /*  // Create Client to Communicate with the HelloService (included example service)
-    const client = new HelloServiceClient(conn);
-
-    // Create Request to HelloService
-    const request = new HelloRequest();
-    request.setName($('#fireAndForgetArea').val());
-
-    console.log("Sending 'World' to HelloService...");
-
-    // Call the HelloService
-    client.sayHello(request).subscribe({
-        onComplete: response => {
-            logFunction("Hello Service responded with: " + response.getMessage());
-        },
-        onError: error => {
-            logFunction("Hello Service responded with error: " + error);
-        }
-    });*/
-
+    console.log("Ran hello successfully")
 }
 
 
 async function requestResponse(input, logFunction) {
     const client = new HelloServiceClient(connection);
-
     // Create Request to HelloService
     const request = new HelloRequest();
     request.setName(input);
 
-    let sayHello = client.sayHello(request);
     // Call the HelloService
-    sayHello.subscribe({
+    client.sayHello(request).subscribe({
         onComplete: response => {
-            console.log("got a response ! " + response);
+            console.log("got a response ! " + response.getMessage());
             $('#requestResponseResponses').append("<div>" + input + " : " + response + "</div>");
         },
         onError: error => {
