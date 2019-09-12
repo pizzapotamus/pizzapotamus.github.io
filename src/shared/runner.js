@@ -23,8 +23,8 @@ function runHello(isServer, logFunction) {
             accessToken: 'kTBDVtfRBO4tHOnZzSyY5ym2kfY=',
         },
         transport: {
-            url: "ws://localhost:8101/",
-            // url: "wss://rsocket-innovate.herokuapp.com/ws",
+            // url: "ws://localhost:8101/",
+            url: "wss://8bfde240.ngrok.io",
         },
     });
 
