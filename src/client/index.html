@@ -14,55 +14,68 @@
 
 <br>
 
-<div class="container">
+<div class="container-fluid">
   <!-- Fire and Forget -->
-  <div class="row">
-    <div class="col-8">
-      <div class="btn-group">
-        <label for="fireAndForgetArea">Yell at someone one sided</label><input type="text"
-                                                                               id="fireAndForgetArea"
-                                                                               class="form-control rounded-0"/>
+  <div>
+    <div>
+      <div class="btn-group row">
+        <label for="fireAndForgetArea" class="col">Yell at someone one sided</label>
+        <input type="text"
+               id="fireAndForgetArea"
+               class="form-control rounded-0 col"/>
       </div>
-      <div class="btn-group">
-        <button id="fireAndForgetBtn" class="btn btn-primary" style="float: right;">
-          Fire And Forget
-        </button>
-        <button id="fireAndForgetClearMessagesBtn" class="btn btn-primary">
-          Clear Messages
-        </button>
+      <div class="row">
+        <br class="col">
       </div>
-    </div>
+      <div class="row">
+        <div class="btn-group col">
+          <button id="fireAndForgetBtn" class="btn btn-primary" style="float: right;">
+            Fire And Forget
+          </button>
+          <button id="fireAndForgetClearMessagesBtn" class="btn btn-primary">
+            Clear Messages
+          </button>
+        </div>
 
-    <div class="col-4">
-      <ol id="fireAndForgetResponses">
-      </ol>
+
+        <div class="col">
+          <ol id="fireAndForgetResponses">
+          </ol>
+        </div>
+      </div>
     </div>
   </div>
 
   <br>
 
   <!-- Request Response -->
-  <div class="row">
-    <div class="col-8">
-      <div class="btn-group">
-        <label for="requestResponseArea">Ask a question</label><input type="text"
-                                                                      id="requestResponseArea"
-                                                                      class="form-control rounded-0"/>
+  <div>
+    <div>
+      <div class="btn-group row">
+        <label for="requestResponseArea" class="col">Ask a question</label>
+        <input type="text"
+               id="requestResponseArea"
+               class="form-control rounded-0 col"/>
       </div>
-
-      <div class="btn-group">
-        <button id="requestResponseBtn" class="btn btn-primary">
-          Request
-        </button>
-        <button id="requestResponseClearMessagesBtn" class="btn btn-primary">
-          Clear Messages
-        </button>
+      <div class="row">
+        <br class="col">
       </div>
-    </div>
+      <div class="row">
+        <div class="btn-group col">
+          <button id="requestResponseBtn" class="btn btn-primary">
+            Request
+          </button>
+          <button id="requestResponseClearMessagesBtn" class="btn btn-primary">
+            Clear Messages
+          </button>
+        </div>
 
-    <div class="col-4">
-      <ol id="requestResponseResponses">
-      </ol>
+
+        <div class="col">
+          <ol id="requestResponseResponses">
+          </ol>
+        </div>
+      </div>
     </div>
   </div>
 </div>
