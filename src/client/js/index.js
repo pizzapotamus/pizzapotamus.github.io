@@ -13,7 +13,7 @@ function addMessage(message) {
 $('#fireAndForgetBtn').on('click', function (e) {
     let input = $('#fireAndForgetArea');
 
-    // $('#fireAndForgetResponses').append("<li>" + input.val() + "</li>");
+    $('#fireAndForgetResponses').append("<li>" + input.val() + "</li>");
     input.val('');
 });
 
