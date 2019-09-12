@@ -60,16 +60,8 @@ async function requestFireForget(input, logFunction) {
     const request = new HelloRequest();
     request.setName(input);
 
-    // Call the HelloService
-    client.sayHello(request).subscribe({
-        onComplete: response => {
-            console.log("got a response ! " + response.getMessage());
-            $('#fireAndForgetResponses').append("<li>" + input.val() + "</li>");
-        },
-        onError: error => {
-            logFunction("Error: " + error);
-        }
-    });
+    $('#fireAndForgetResponses').append("<li>" + input + "</li>");
+
 }
 
 module.exports = {runHello, requestResponse, requestFireForget};
