@@ -9,83 +9,85 @@
         crossorigin="anonymous">
 </head>
 <body>
-<div class="jumbotron jumbotron-fluid">
-  <h1 class="display-4 text-center">RSocket Demo</h1>
-</div>
-
-<br>
-
-<div class="container-fluid">
-  <!-- Fire and Forget -->
-  <div>
-    <div>
-      <div class="btn-group row">
-        <label for="fireAndForgetArea" class="col">Yell at someone one sided</label>
-        <input type="text"
-               id="fireAndForgetArea"
-               class="form-control rounded-0 col"/>
-      </div>
-      <div class="row">
-        <br class="col">
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="btn-group">
-            <button id="fireAndForgetBtn" class="btn btn-primary" style="float: right;">
-              Fire And Forget
-            </button>
-            <button id="fireAndForgetClearMessagesBtn" class="btn btn-primary">
-              Clear Messages
-            </button>
-          </div>
-        </div>
-
-
-        <div class="col">
-          <ol id="fireAndForgetResponses">
-          </ol>
-        </div>
-      </div>
-    </div>
+<div style="font-family: 'Helvetica Neue',sans-serif">
+  <div class="jumbotron jumbotron-fluid">
+    <h1 class="display-4 text-center">RSocket Demo</h1>
   </div>
 
   <br>
 
-  <!-- Request Response -->
-  <div>
+  <div class="container-fluid">
+    <!-- Fire and Forget -->
     <div>
-      <div class="btn-group row">
-        <label for="requestResponseArea" class="col">Ask a question</label>
-        <input type="text"
-               id="requestResponseArea"
-               class="form-control rounded-0 col"/>
-      </div>
-      <div class="row">
-        <br class="col">
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="btn-group">
-            <button id="requestResponseBtn" class="btn btn-primary">
-              Request
-            </button>
-            <button id="requestResponseClearMessagesBtn" class="btn btn-primary">
-              Clear Messages
-            </button>
+      <div>
+        <div class="btn-group row">
+          <label for="fireAndForgetArea" class="col">Yell at someone one sided</label>
+          <input type="text"
+                 id="fireAndForgetArea"
+                 class="form-control rounded-0 col"/>
+        </div>
+        <div class="row">
+          <br class="col">
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="btn-group">
+              <button id="fireAndForgetBtn" class="btn btn-primary" style="float: right;">
+                Fire And Forget
+              </button>
+              <button id="fireAndForgetClearMessagesBtn" class="btn btn-primary">
+                Clear Messages
+              </button>
+            </div>
+          </div>
+
+
+          <div class="col">
+            <ol id="fireAndForgetResponses">
+            </ol>
           </div>
         </div>
+      </div>
+    </div>
+
+    <br>
+
+    <!-- Request Response -->
+    <div>
+      <div>
+        <div class="btn-group row">
+          <label for="requestResponseArea" class="col">Ask a question</label>
+          <input type="text"
+                 id="requestResponseArea"
+                 class="form-control rounded-0 col"/>
+        </div>
+        <div class="row">
+          <br class="col">
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="btn-group">
+              <button id="requestResponseBtn" class="btn btn-primary">
+                Request
+              </button>
+              <button id="requestResponseClearMessagesBtn" class="btn btn-primary">
+                Clear Messages
+              </button>
+            </div>
+          </div>
 
 
-        <div class="col">
-          <ol id="requestResponseResponses">
-          </ol>
+          <div class="col">
+            <ol id="requestResponseResponses">
+            </ol>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <br>
+  <ul id="messages"></ul>
 </div>
-<br>
-<ul id="messages"></ul>
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
