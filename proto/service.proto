@@ -4,9 +4,13 @@ package com.netifi.quickstart.service;
 
 service HelloService {
 
-    // Returns a Hello World Message
     rpc SayHello (HelloRequest) returns (HelloResponse) {}
+    rpc fireAndForget(HelloRequest) returns (Empty) {}
+    rpc longWinded(HelloRequest) returns (stream HelloResponse) {}
+    rpc conversation(stream HelloRequest) returns (stream HelloResponse) {}
 }
+
+message Empty{}
 
 message HelloRequest {
     string name = 1;
