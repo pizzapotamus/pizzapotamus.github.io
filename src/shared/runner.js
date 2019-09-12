@@ -24,7 +24,7 @@ function runHello(isServer, logFunction) {
         },
         transport: {
             url: "ws://localhost:8101/",
-            // url: "wss://rsocket-demo.herokuapp.com/ws",
+            // url: "wss://rsocket-innovate.herokuapp.com/ws",
         },
     });
 
@@ -59,9 +59,15 @@ async function requestFireForget(input, logFunction) {
     // Create Request to HelloService
     const request = new HelloRequest();
     request.setName(input);
-
-    $('#fireAndForgetResponses').append("<li>" + input + "</li>");
-
+    client.fireAndForget(request).subscribe({
+        onComplete: response => {
+            console.log("got a response ! " + response.getMessage());
+            $('#fireAndForgetResponses').append("<li> You yelled " + input + " to " + response.getMessage() + "</li>");
+        },
+        onError: error => {
+            logFunction("Error: " + error);
+        }
+    });
 }
 
 module.exports = {runHello, requestResponse, requestFireForget};

@@ -1,4 +1,4 @@
-const {HelloResponse} = require('./netifi/service_pb');
+const {HelloResponse, Empty} = require('./netifi/service_pb');
 const {
     Single
 } = require('rsocket-flowable');
@@ -31,6 +31,11 @@ function DefaultHelloService(serviceName, logFunction) {
             subscriber.onSubscribe();
             await waitUserInput(() => subscriber.onComplete(resp));
         });
+    };
+
+    this.fireAndForget = function (message) {
+        $('#fireAndForgetResponses').append("<li>" + message.getName() + " from " + serviceName + "</li>");
+        return Single.of(new Empty());
     };
 }
 
