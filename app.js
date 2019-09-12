@@ -14417,13 +14417,12 @@ function runHello(isServer, logFunction) {
             accessToken: 'kTBDVtfRBO4tHOnZzSyY5ym2kfY='
         },
         transport: {
-            // url: "ws://localhost:8101/",
-            url: "wss://rsocket-demo.herokuapp.com/ws"
+            url: "ws://localhost:8101/"
+            // url: "wss://rsocket-demo.herokuapp.com/ws",
         }
     });
 
-    const serviceName = "helloservice-" + destinationName;
-    netifiGateway.addService(QUICKSTART_SERVICE_NAME, new HelloServiceServer(new DefaultHelloService(serviceName, logFunction)));
+    netifiGateway.addService(QUICKSTART_SERVICE_NAME, new HelloServiceServer(new DefaultHelloService(destinationName, logFunction)));
     netifiGateway._connect();
     // Connect to Netifi Netifi Platform
     connection = netifiGateway.group("innovate.servers");
@@ -14470,10 +14469,11 @@ function DefaultHelloService(serviceName, logFunction) {
         let next = false;
         let resp = new HelloResponse();
         let id = messageId++;
-        $('#requestResponseResponses').append("<div id='div" + id + "'>" + message.getName() + " <input type='text' id='response " + id + "'/><button id='btn" + id + "'>Response</button>");
+        $('#requestResponseResponses').append("<div id='div" + id + "'>" + message.getName() + " <input type='text' id='response" + id + "'/><button id='btn" + id + "'>Response</button>");
         $("#btn" + id).on('click', function (e) {
-            resp.setMessage("Hello, " + message.getName() + "! from " + serviceName);
+            resp.setMessage($('#response' + id).val() + " from " + serviceName);
             console.log("set message");
+            $('#div' + id).remove();
             next = true;
         });
         async function waitUserInput(e) {
@@ -14482,7 +14482,6 @@ function DefaultHelloService(serviceName, logFunction) {
             console.log('user input detected');
             e.call();
         }
-        resp.setMessage("derp");
         return new Single(async subscriber => {
             subscriber.onSubscribe();
             await waitUserInput(() => subscriber.onComplete(resp));

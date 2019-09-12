@@ -28,8 +28,7 @@ function runHello(isServer, logFunction) {
         },
     });
 
-    const serviceName = "helloservice-" + destinationName;
-    netifiGateway.addService(QUICKSTART_SERVICE_NAME, new HelloServiceServer(new DefaultHelloService(serviceName, logFunction)));
+    netifiGateway.addService(QUICKSTART_SERVICE_NAME, new HelloServiceServer(new DefaultHelloService(destinationName, logFunction)));
     netifiGateway._connect();
     // Connect to Netifi Netifi Platform
     connection = netifiGateway.group("innovate.servers");

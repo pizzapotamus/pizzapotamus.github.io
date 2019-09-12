@@ -14,10 +14,11 @@ function DefaultHelloService(serviceName, logFunction) {
         let next = false;
         let resp = new HelloResponse();
         let id = messageId++;
-        $('#requestResponseResponses').append("<div id='div" + id + "'>" + message.getName() + " <input type='text' id='response " + id +"'/><button id='btn" + id + "'>Response</button>");
+        $('#requestResponseResponses').append("<div id='div" + id + "'>" + message.getName() + " <input type='text' id='response" + id +"'/><button id='btn" + id + "'>Response</button>");
         $("#btn" + id).on('click', function (e) {
-            resp.setMessage("Hello, " + message.getName() + "! from " + serviceName);
+            resp.setMessage($('#response' + id).val() + " from " + serviceName);
             console.log("set message");
+            $('#div' + id).remove();
             next = true;
         });
         async function waitUserInput(e){
@@ -26,7 +27,6 @@ function DefaultHelloService(serviceName, logFunction) {
             console.log('user input detected');
             e.call();
         }
-        resp.setMessage("derp");
         return new Single(async subscriber => {
             subscriber.onSubscribe();
             await waitUserInput(() => subscriber.onComplete(resp));
