@@ -1,4 +1,4 @@
-const {runHello, requestResponse} = require('../../shared/runner');
+const {runHello, requestResponse, requestFireForget} = require('../../shared/runner');
 
 function addMessage(message) {
     var ul = document.getElementById('messages');
@@ -12,8 +12,9 @@ function addMessage(message) {
 
 $('#fireAndForgetBtn').on('click', function (e) {
     let input = $('#fireAndForgetArea');
+    requestFireForget(input.val(), addMessage);
 
-    $('#fireAndForgetResponses').append("<li>" + input.val() + "</li>");
+    // $('#fireAndForgetResponses').append("<li>" + input.val() + "</li>");
     input.val('');
 });
 

@@ -14360,7 +14360,7 @@ function never() {
 /* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { runHello, requestResponse } = __webpack_require__(116);
+const { runHello, requestResponse, requestFireForget } = __webpack_require__(116);
 
 function addMessage(message) {
     var ul = document.getElementById('messages');
@@ -14374,6 +14374,7 @@ function addMessage(message) {
 
 $('#fireAndForgetBtn').on('click', function (e) {
     let input = $('#fireAndForgetArea');
+    // requestFireForget(input.val(), addMessage);
 
     $('#fireAndForgetResponses').append("<li>" + input.val() + "</li>");
     input.val('');
@@ -14458,7 +14459,25 @@ async function requestResponse(input, logFunction) {
     });
 }
 
-module.exports = { runHello, requestResponse };
+async function requestFireForget(input, logFunction) {
+    const client = new HelloServiceClient(connection);
+    // Create Request to HelloService
+    const request = new HelloRequest();
+    request.setName(input);
+
+    // Call the HelloService
+    client.sayHello(request).subscribe({
+        onComplete: response => {
+            console.log("got a response ! " + response.getMessage());
+            $('#fireAndForgetResponses').append("<li>" + input.val() + "</li>");
+        },
+        onError: error => {
+            logFunction("Error: " + error);
+        }
+    });
+}
+
+module.exports = { runHello, requestResponse, requestFireForget };
 
 /***/ }),
 /* 117 */

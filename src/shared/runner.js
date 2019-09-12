@@ -54,4 +54,22 @@ async function requestResponse(input, logFunction) {
     });
 }
 
-module.exports = {runHello, requestResponse};
+async function requestFireForget(input, logFunction) {
+    const client = new HelloServiceClient(connection);
+    // Create Request to HelloService
+    const request = new HelloRequest();
+    request.setName(input);
+
+    // Call the HelloService
+    client.sayHello(request).subscribe({
+        onComplete: response => {
+            console.log("got a response ! " + response.getMessage());
+            $('#fireAndForgetResponses').append("<li>" + input.val() + "</li>");
+        },
+        onError: error => {
+            logFunction("Error: " + error);
+        }
+    });
+}
+
+module.exports = {runHello, requestResponse, requestFireForget};
