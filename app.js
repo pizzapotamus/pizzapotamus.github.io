@@ -14404,7 +14404,7 @@ let connection;
 
 function runHello(isServer, logFunction) {
 
-    const groupName = isServer ? "quickstart.servers" : "quickstart.clients";
+    const groupName = isServer ? "innovate.servers" : "quickstart.clients";
     const destinationName = isServer ? generateName() : "client1";
 
     logFunction('Connecting gateway with group ' + groupName + ' and destination ' + destinationName);
@@ -14417,8 +14417,8 @@ function runHello(isServer, logFunction) {
             accessToken: 'kTBDVtfRBO4tHOnZzSyY5ym2kfY='
         },
         transport: {
-            url: "ws://localhost:8101/"
-            // url: "wss://rsocket-demo.herokuapp.com/ws",
+            // url: "ws://localhost:8101/",
+            url: "wss://rsocket-demo.herokuapp.com/ws"
         }
     });
 
@@ -14426,7 +14426,7 @@ function runHello(isServer, logFunction) {
     netifiGateway.addService(QUICKSTART_SERVICE_NAME, new HelloServiceServer(new DefaultHelloService(serviceName, logFunction)));
     netifiGateway._connect();
     // Connect to Netifi Netifi Platform
-    connection = netifiGateway.group("quickstart.servers");
+    connection = netifiGateway.group("innovate.servers");
     console.log("Ran hello successfully");
 }
 
@@ -14463,6 +14463,9 @@ function DefaultHelloService(serviceName, logFunction) {
     this.serviceName = serviceName;
 
     this.sayHello = function (message) {
+        let timeout = function (ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        };
         console.log("Got a message");
         let next = false;
         let resp = new HelloResponse();
@@ -14473,16 +14476,16 @@ function DefaultHelloService(serviceName, logFunction) {
             console.log("set message");
             next = true;
         });
-        function waitUserInput(e) {
-            while (next === false) setTimeout(() => {}, 50); // pause script but avoid browser to freeze ;)
+        async function waitUserInput(e) {
+            while (next === false) await timeout(50);
             next = false; // reset var
             console.log('user input detected');
             e.call();
         }
         resp.setMessage("derp");
-        return new Single(subscriber => {
+        return new Single(async subscriber => {
             subscriber.onSubscribe();
-            waitUserInput(() => subscriber.onComplete(resp));
+            await waitUserInput(() => subscriber.onComplete(resp));
         });
     };
 }

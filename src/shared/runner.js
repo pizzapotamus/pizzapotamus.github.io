@@ -10,7 +10,7 @@ let connection;
 
 function runHello(isServer, logFunction) {
 
-    const groupName = isServer ? "quickstart.servers" : "quickstart.clients";
+    const groupName = isServer ? "innovate.servers" : "quickstart.clients";
     const destinationName = isServer ? generateName() : "client1";
 
     logFunction('Connecting gateway with group ' + groupName + ' and destination ' + destinationName);
@@ -32,7 +32,7 @@ function runHello(isServer, logFunction) {
     netifiGateway.addService(QUICKSTART_SERVICE_NAME, new HelloServiceServer(new DefaultHelloService(serviceName, logFunction)));
     netifiGateway._connect();
     // Connect to Netifi Netifi Platform
-    connection = netifiGateway.group("quickstart.servers");
+    connection = netifiGateway.group("innovate.servers");
     console.log("Ran hello successfully")
 }
 
